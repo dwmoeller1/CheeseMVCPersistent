@@ -4,18 +4,20 @@ using CheeseMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CheeseMVC.Migrations
 {
     [DbContext(typeof(CheeseDbContext))]
-    partial class CheeseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180619214321_AddCategoryToCheese")]
+    partial class AddCategoryToCheese
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -51,48 +53,11 @@ namespace CheeseMVC.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CheeseMVC.Models.CheeseMenu", b =>
-                {
-                    b.Property<int>("CheeseId");
-
-                    b.Property<int>("MenuId");
-
-                    b.HasKey("CheeseId", "MenuId");
-
-                    b.HasIndex("MenuId");
-
-                    b.ToTable("CheeseMenus");
-                });
-
-            modelBuilder.Entity("CheeseMVC.Models.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Menus");
-                });
-
             modelBuilder.Entity("CheeseMVC.Models.Cheese", b =>
                 {
                     b.HasOne("CheeseMVC.Models.CheeseCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-                });
-
-            modelBuilder.Entity("CheeseMVC.Models.CheeseMenu", b =>
-                {
-                    b.HasOne("CheeseMVC.Models.Cheese", "Cheese")
-                        .WithMany()
-                        .HasForeignKey("CheeseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CheeseMVC.Models.Menu", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
